@@ -207,11 +207,11 @@ resource "aws_ecs_service" "service" {
   }
 
   dynamic "load_balancer" {
-    for_each = var.lb_arn == "" ? [] : [1]
+    for_each = var.lb_arn == "" ? [] : concat([aws_lb_target_group.task[0].arn], var.task_additional_lb_target_groups)
     content {
       container_name   = var.container_name != "" ? var.container_name : var.name_prefix
       container_port   = var.task_container_port
-      target_group_arn = aws_lb_target_group.task[0].arn
+      target_group_arn = load_balancer.value
     }
   }
 

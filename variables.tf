@@ -241,3 +241,9 @@ variable "aws_iam_role_task_suffix" {
   type        = string
   default     = "-task-role"
 }
+
+variable "task_additional_lb_target_groups" {
+  description = "List of additional aws_lb_target_group ARNs to add as load balancers"
+  type = list(string)
+  default = []
+}
